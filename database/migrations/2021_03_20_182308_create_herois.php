@@ -16,10 +16,10 @@ class CreateHerois extends Migration
         Schema::create('herois', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 15);
-            $table->integer('pdv');
-            $table->integer('forca');
-            $table->integer('defesa');
-            $table->integer('agilidade');
+            $table->unsignedInteger('pdv');
+            $table->unsignedInteger('forca');
+            $table->unsignedInteger('defesa');
+            $table->unsignedInteger('agilidade');
             $table->string('fdd', 5);
             $table->timestamps();
         });

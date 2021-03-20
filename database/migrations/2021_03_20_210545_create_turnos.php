@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMonstros extends Migration
+class CreateTurnos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateMonstros extends Migration
      */
     public function up()
     {
-        Schema::create('monstros', function (Blueprint $table) {
+        Schema::create('turnos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 15);
-            $table->unsignedInteger('pdv');
-            $table->unsignedInteger('forca');
+            $table->unsignedBigInteger('batalha_id');
+            $table->foreign('batalha_id')->references('id')->on('batalhas');
+            $table->enum('atacante', ['heroi', 'monstro']);
+            $table->unsignedInteger('ataque');
             $table->unsignedInteger('defesa');
-            $table->unsignedInteger('agilidade');
-            $table->string('fdd', 5);
+            $table->unsignedInteger('dano');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateMonstros extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('monstros');
+        Schema::dropIfExists('turnos');
     }
 }
