@@ -15,7 +15,7 @@ class CreateJogadores extends Migration
     {
         Schema::create('jogadores', function (Blueprint $table) {
             $table->id();
-            $table->string('nickname', 15);
+            $table->string('nickname', 15)->unique();
             $table->timestamps();
         });
     }

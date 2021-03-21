@@ -12,4 +12,5 @@ class JogadorController extends Controller
     {
         return $this->jsonResponse([]);
     }
+
 }

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BatalhaController;
 use App\Http\Controllers\JogadorController;
-use App\Http\Controllers\NovoJogoController;
+use App\Http\Controllers\JogoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +18,7 @@ use App\Http\Controllers\NovoJogoController;
 |
 */
 
-/*
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-*/
+Route::get('/', [JogoController::class, 'index']);
 
-Route::get('/', [BatalhaController::class, 'index']);
-
-Route::post('/jogar', [NovoJogoController::class, 'verificar']);
+Route::post('/registrar', [JogoController::class, 'registrar']);
 

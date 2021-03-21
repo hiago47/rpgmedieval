@@ -24,6 +24,7 @@ class CreateBatalhas extends Migration
             $table->foreign('monstro_id')->references('id')->on('monstros');
             $table->unsignedInteger('pdv_monstro');
             $table->enum('vitoria', ['heroi', 'monstro'])->nullable();
+            $table->unsignedInteger('pontos')->default(0);
             $table->timestamps();
         });
     }
