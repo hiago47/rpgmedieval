@@ -27,8 +27,9 @@ class JogoController extends Controller
 
         implode(', ', $this->getMonstros('nome')) . ". " .
 
-        "Para começar: Digite um nickname entre 5 e 15 caracteres (sem espaços ou caracteres especiais) " .
-        "e escolha um tipo de herói. ";
+        "Para começar: Digite um nickname entre 5 e 15 caracteres " . 
+        "e escolha uma classe de herói. " . 
+        "Seu nickname pode conter letras e números, mas não é permitido espaços, acentuação e caracteres especiais.";
 
         $response = ['mensagem' => $msg, 'herois' => $this->listHerois()];
 
@@ -85,8 +86,9 @@ class JogoController extends Controller
     private function novaBatalha($jogadorId, $heroiId)
     {
         $jogador = Jogador::find($jogadorId);
+
         $heroi = $this->getHeroi($heroiId);
-        $monstro = $this->getMonstroAletorio();
+        $monstro = $this->getMonstroAleatorio();
 
         $batalha = new Batalha();
 
@@ -117,7 +119,7 @@ class JogoController extends Controller
         return $res;
     }
 
-    
+
     private function buscarBatalha($jogadorId, $heroiId)
     {
         $batalhaEmAndamento = Batalha::where('jogador_id', $jogadorId)

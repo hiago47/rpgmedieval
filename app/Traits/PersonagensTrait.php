@@ -42,7 +42,7 @@ trait PersonagensTrait
     /**
      * Monstros
      */
-    public function getMonstroAletorio()
+    public function getMonstroAleatorio()
     {
         return Monstro::inRandomOrder()->first();
     }

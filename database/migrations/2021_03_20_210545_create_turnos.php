@@ -19,6 +19,7 @@ class CreateTurnos extends Migration
             $table->foreign('batalha_id')->references('id')->on('batalhas');
             $table->enum('atacante', ['heroi', 'monstro']);
             $table->unsignedInteger('ataque');
+            $table->enum('defensor', ['heroi', 'monstro']);
             $table->unsignedInteger('defesa');
             $table->unsignedInteger('dano');
             $table->timestamps();
