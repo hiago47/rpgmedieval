@@ -129,8 +129,8 @@ class JogoController extends Controller
 
         $res = [
             'id' => $batalhaEmAndamento->id,
-            'mensagem' => "Você ainda está em batalha 
-            e enfrentando o {$batalhaEmAndamento->monstro->nome}. Continue lutando!",
+            'mensagem' => "Você ainda está em batalha " .
+            "e enfrentando o {$batalhaEmAndamento->monstro->nome}. Continue lutando!",
             'status' => [
                 'personagens' => [
                     'heroi' => [

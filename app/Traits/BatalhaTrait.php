@@ -83,6 +83,8 @@ trait BatalhaTrait
      * 1 = número de dados
      * 10 = número de faces
      * 
+     * Retorna a soma do resultado
+     * 
      * @param string dado
      * @return int 
      */
@@ -134,5 +136,10 @@ trait BatalhaTrait
         }
 
         return $arrStatus;
+    }
+
+    public function tratarInteiro($valor)
+    {
+        return $valor >= 0 ? $valor : 0;
     }
 }

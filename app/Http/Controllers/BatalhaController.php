@@ -30,6 +30,7 @@ class BatalhaController extends Controller
 
             return $this->jsonResponse($res);
         }
+        
 
         $atacante = $this->iniciativa($batalha->heroi, $batalha->monstro);
         $defensor = $this->defensor($atacante);
@@ -53,29 +54,27 @@ class BatalhaController extends Controller
         $turno = new Turno($resAtaque);
         $batalha->turnos()->save($turno);
 
+
         $danoSofrido = 0;
         if($resAtaque['dano'] > 0) {
 
             $danoSofrido = $resAtaque['dano'];
             $batalha->$pdvDefensor-= $danoSofrido;
-            
-            if($batalha->$pdvDefensor < 0) {
-                $batalha->$pdvDefensor = 0;
-            }
+            $batalha->$pdvDefensor = $this->tratarInteiro($batalha->$pdvDefensor);
         }
 
         if($danoSofrido > 0) {
+
             if($batalha->$pdvDefensor === 0) {
+                
                 $batalha->vitoria = $atacante;
-                $msg.= " Batalha finalizada.";
 
                 if($batalha->vitoria === 'heroi') {
-                    $batalha->pontos = 100 - count($batalha->turnos);
-
-                    if($batalha->pontos < 0) {
-                        $batalha->pontos = 0;
-                    }
+                    
+                    $batalha->pontos = $this->tratarInteiro((100 - count($batalha->turnos)));
                 }
+
+                $msg.= " Batalha finalizada.";
             }
 
             $batalha->save();
@@ -104,15 +103,21 @@ class BatalhaController extends Controller
             'id' => $batalha->id,
             'status' => $this->status($batalha)
         ];
-        $res['ultimo_ataque'] = $batalha->turnos->last()->only(
-            [
-                'atacante',
-                'ataque',
-                'defensor',
-                'defesa', 
-                'dano'
-            ]
-        );
+
+        $arrUltimoAtaque = [];
+        if(count($batalha->turnos) > 0) {
+            $arrUltimoAtaque = $batalha->turnos->last()->only(
+                [
+                    'atacante',
+                    'ataque',
+                    'defensor',
+                    'defesa', 
+                    'dano'
+                ]
+            );
+        }
+
+        $res['ultimo_ataque'] = $arrUltimoAtaque;
 
         return $this->jsonResponse($res);
     }
