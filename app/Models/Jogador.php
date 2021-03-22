@@ -16,4 +16,9 @@ class Jogador extends Model
         "nickname"
     ];
     
+    public function batalhas()
+    {
+        return $this->hasMany(Batalha::class);
+    }
+    
 }

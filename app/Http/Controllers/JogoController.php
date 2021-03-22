@@ -8,11 +8,13 @@ use App\Models\Jogador;
 
 use App\Traits\ApiResponseTrait;
 use App\Traits\PersonagensTrait;
+use App\Traits\BatalhaTrait;
 
 class JogoController extends Controller
 {
     use ApiResponseTrait;
     use PersonagensTrait;
+    use BatalhaTrait;
 
     /**
      * Boas Vindas e instruções
@@ -80,7 +82,6 @@ class JogoController extends Controller
 
     private function novaBatalha($jogadorId, $heroiId)
     {
-        $jogador = Jogador::find($jogadorId);
 
         $heroi = $this->getHeroi($heroiId);
         $monstro = $this->getMonstroAleatorio();
@@ -98,19 +99,7 @@ class JogoController extends Controller
         $res = [
             'id' => $batalha->id,
             'mensagem' => "Você enfrentará um {$monstro->nome}. Boa sorte!",
-            'status' => [
-                'personagens' => [
-                    'heroi' => [
-                        'nome' => $jogador->nickname,
-                        'classe' => $heroi->nome,
-                        'pdv' => $batalha->pdv_heroi
-                    ],
-                    'monstro' => [
-                        'nome' => $monstro->nome,
-                        'pdv' => $batalha->pdv_monstro
-                    ]
-                ]
-            ]
+            'status' => $this->status($batalha)
         ];
 
         return $res;
@@ -131,19 +120,7 @@ class JogoController extends Controller
             'id' => $batalhaEmAndamento->id,
             'mensagem' => "Você ainda está em batalha " .
             "e enfrentando o {$batalhaEmAndamento->monstro->nome}. Continue lutando!",
-            'status' => [
-                'personagens' => [
-                    'heroi' => [
-                        'nome' => $batalhaEmAndamento->jogador->nickname,
-                        'classe' => $batalhaEmAndamento->heroi->nome,
-                        'pdv' => $batalhaEmAndamento->pdv_heroi
-                    ],
-                    'monstro' => [
-                        'nome' => $batalhaEmAndamento->monstro->nome,
-                        'pdv' => $batalhaEmAndamento->pdv_monstro
-                    ]
-                ]
-            ]
+            'status' => $this->status($batalhaEmAndamento)
         ];
 
         return $res;

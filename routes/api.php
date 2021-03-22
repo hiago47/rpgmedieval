@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BatalhaController;
+use App\Http\Controllers\JogadorController;
 use App\Http\Controllers\JogoController;
 
 /*
@@ -25,3 +25,4 @@ Route::get('batalha/{batalha}/jogar', [BatalhaController::class, 'jogar'])->name
 
 Route::get('batalha/{batalha}', [BatalhaController::class, 'info'])->name('batalha.info');
 
+Route::get('/ranking', [JogadorController::class, 'ranking']);
