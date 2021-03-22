@@ -22,4 +22,23 @@ class Batalha extends Model
         "pontos"
     ];
 
+    public function jogador()
+    {
+        return $this->belongsTo(Jogador::class);
+    }
+
+    public function heroi()
+    {
+        return $this->belongsTo(Heroi::class);
+    }
+
+    public function monstro()
+    {
+        return $this->belongsTo(Monstro::class);
+    }
+
+    public function turnos()
+    {
+        return $this->hasMany(Turno::class);
+    }
 }

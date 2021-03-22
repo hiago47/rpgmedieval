@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrarJogoRequest;
 use App\Models\Batalha;
 use App\Models\Jogador;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 
 use App\Traits\ApiResponseTrait;
 use App\Traits\PersonagensTrait;
@@ -18,8 +16,10 @@ class JogoController extends Controller
 
     /**
      * Boas Vindas e instruções
+     * 
+     * @return 
      */
-    public function index()
+    public function inicio()
     {
         
         $msg = "Seja bem vindo ao RPG Medieval. " . 
@@ -38,21 +38,16 @@ class JogoController extends Controller
     
 
     /**
-     * Registrar ou recuperar Jogador e Batalha
+     * Registrar ou recuperar registro de Jogador 
+     * 
+     * Registrar ou recuperar Batalha em andamento
+     * 
+     * @param  \App\Http\Requests\RegistrarJogoRequest $request
+     * @return 
      */
-    public function registrar(Request $request)
+    public function registrar(RegistrarJogoRequest $request)
     {
-        $validator = Validator::make($request->all(), $this->rules(), $this->messages());
-
-        if($validator->fails()) {
-            $response = [
-                'status' => 'erro', 
-                'mensagem' => 'Erro ao registrar', 'detalhes' => $validator->errors()
-            ];
-
-            return $this->jsonResponse($response, 422);
-        }
-
+        
         $nickname = $request->input('nickname');
         $heroi = $request->input('heroi');
 
@@ -104,14 +99,16 @@ class JogoController extends Controller
             'id' => $batalha->id,
             'mensagem' => "Você enfrentará um {$monstro->nome}. Boa sorte!",
             'status' => [
-                'heroi' => [
-                    'nome' => $jogador->nickname,
-                    'classe' => $heroi->nome,
-                    'pdv' => $batalha->pdv_heroi
-                ],
-                'monstro' => [
-                    'nome' => $monstro->nome,
-                    'pdv' => $batalha->pdv_monstro
+                'personagens' => [
+                    'heroi' => [
+                        'nome' => $jogador->nickname,
+                        'classe' => $heroi->nome,
+                        'pdv' => $batalha->pdv_heroi
+                    ],
+                    'monstro' => [
+                        'nome' => $monstro->nome,
+                        'pdv' => $batalha->pdv_monstro
+                    ]
                 ]
             ]
         ];
@@ -132,16 +129,19 @@ class JogoController extends Controller
 
         $res = [
             'id' => $batalhaEmAndamento->id,
-            'mensagem' => "Você ainda está em batalha e enfrentando o MONSTRO. Continue lutando!",
+            'mensagem' => "Você ainda está em batalha 
+            e enfrentando o {$batalhaEmAndamento->monstro->nome}. Continue lutando!",
             'status' => [
-                'heroi' => [
-                    'nome' => "JOGADOR",
-                    'classe' => "CLASSE",
-                    'pdv' => $batalhaEmAndamento->pdv_heroi
-                ],
-                'monstro' => [
-                    'nome' => "MONSTRO",
-                    'pdv' => $batalhaEmAndamento->pdv_monstro
+                'personagens' => [
+                    'heroi' => [
+                        'nome' => $batalhaEmAndamento->jogador->nickname,
+                        'classe' => $batalhaEmAndamento->heroi->nome,
+                        'pdv' => $batalhaEmAndamento->pdv_heroi
+                    ],
+                    'monstro' => [
+                        'nome' => $batalhaEmAndamento->monstro->nome,
+                        'pdv' => $batalhaEmAndamento->pdv_monstro
+                    ]
                 ]
             ]
         ];
@@ -149,38 +149,4 @@ class JogoController extends Controller
         return $res;
     }
 
-
-    /**
-     * Regras de validação do request
-     */
-    public function rules()
-    {
-        return [
-            'nickname' => [
-                'required',
-                'max:15',
-                'min:5',
-                'regex:/(^([a-zA-Z0-9]+)(\d+)?$)/u'
-            ],
-            'heroi'  => [
-                'required',
-                Rule::in($this->getHerois())
-            ]
-        ];
-    }
-
-    /**
-     * Mensagens de erro na validação
-     */
-    public function messages()
-    {
-        return [
-            'nickname.required' => 'O :attribute é obrigatório',
-            'nickname.min'      => 'O :attribute deve ter no mínimo :min caracteres',
-            'nickname.max'      => 'O :attribute deve ter no máximo :max caracteres',
-            'nickname.regex'    => 'O :attribute não deve conter caracteres especiais',
-            'heroi.required'    => 'A escolha do :attribute é obrigatória', 
-            'heroi.in'          => 'Opção de :attribute inválida',
-        ];
-    }
 }

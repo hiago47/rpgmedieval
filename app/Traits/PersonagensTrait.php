@@ -8,7 +8,9 @@ use App\Models\Monstro;
 trait PersonagensTrait
 {
     /**
-     * Heróis
+     * Lista dos Heróis com os atributos 
+     * 
+     * @return array
      */
     public function listHerois()
     {
@@ -23,39 +25,48 @@ trait PersonagensTrait
         ->get()->toArray();
     }
 
+    /**
+     * Retorna registro do Heróis pelo id
+     * 
+     * @param int $id
+     * @return Heroi
+     */
     public function getHeroi($id)
     {
         return Heroi::find($id);
     }
 
+    /**
+     * Array de Heróis em um campo específico, GROUP_CONCAT('campo')
+     * 
+     * @param string $campo
+     * @return array
+     */
     public function getHerois($campo = 'id')
     {
         return Heroi::pluck($campo)->toArray();
     }
 
-    public function getInfoHeroi($id, $campo = 'nome')
-    {
-        return Heroi::find($id)->$campo;
-    }
-
 
     /**
-     * Monstros
+     * Retorna um único monstro aletarório
+     * 
+     * @return Monstro
      */
     public function getMonstroAleatorio()
     {
         return Monstro::inRandomOrder()->first();
     }
 
+    /**
+     * Array de Monstros em um campo específico, GROUP_CONCAT('campo')
+     * 
+     * @param string $campo
+     * @return array
+     */
     public function getMonstros($campo = 'id')
     {
         return Monstro::pluck($campo)->toArray();
     }
-    
-    public function getInfoMonstro($id, $campo = 'nome')
-    {
-        return Monstro::find($id)->$campo;
-    }
-
     
 }

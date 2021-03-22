@@ -15,7 +15,8 @@ class Turno extends Model
         "id",
         "batalha_id",
         "atacante",
-        "ataque",
+        "ataque", 
+        "defensor", 
         "defesa",
         "dano"
     ];
