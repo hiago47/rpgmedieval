@@ -2,10 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,7 +48,17 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if($request->is('api/*')) {
-            if($e instanceof ModelNotFoundException) {
+
+            if($e instanceof AuthorizationException) {
+                return response()->json(
+                    [
+                        'status' => 'erro', 
+                        'mensagem' => 'Acesso não autorizado'
+                    ], 403
+                );
+            }
+
+            if($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
                 return response()->json(
                     [
                         'status' => 'erro', 
@@ -54,6 +67,15 @@ class Handler extends ExceptionHandler
                 );
             }
 
+            if($e instanceof MethodNotAllowedHttpException) {
+                return response()->json(
+                    [
+                        'status' => 'erro', 
+                        'mensagem' => 'Método não permitido para esta rota'
+                    ], 405
+                );
+            }
+            
             if($e instanceof ValidationException) {
                 return response()->json(
                     [
@@ -63,6 +85,17 @@ class Handler extends ExceptionHandler
                 );
             }
             
+            $detalhes = '';
+            if(config('app.debug')) {
+                $detalhes = ': ' . $e->getMessage() . ' ' . $e->getFile() . ' : linha ' . $e->getLine();
+            }
+
+            return response()->json(
+                [
+                    'status' => 'erro', 
+                    'mensagem' => 'Erro no servidor' . $detalhes
+                ], 500
+            );
         }
     
         return parent::render($request, $e);

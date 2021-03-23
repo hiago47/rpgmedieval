@@ -55,15 +55,10 @@ class BatalhaController extends Controller
         $batalha->turnos()->save($turno);
 
 
-        $danoSofrido = 0;
-        if($resAtaque['dano'] > 0) {
-
-            $danoSofrido = $resAtaque['dano'];
-            $batalha->$pdvDefensor-= $danoSofrido;
-            $batalha->$pdvDefensor = $this->tratarInteiro($batalha->$pdvDefensor);
-        }
-
-        if($danoSofrido > 0) {
+        $dano = $resAtaque['dano'];
+        if($dano > 0) {
+            
+            $batalha->$pdvDefensor = $this->tratarInteiro(($batalha->$pdvDefensor - $dano));
 
             if($batalha->$pdvDefensor === 0) {
                 
