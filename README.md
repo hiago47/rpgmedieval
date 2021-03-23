@@ -41,5 +41,11 @@ Jogo de RPG que roda por API. Recebe comandos via GET e retorna um JSON com o re
     php artisan db:seed
     ```
 
-# Rotas e passo a passo do desenvolvimento
-
+# Passo a passo do desenvolvimento e as Rotas
+    - JogoController
+        Eu agrupei a introdução ao jogo e registro de jogador neste controller
+        
+        ```
+        GET /api
+        ```
+        Retorna em JSON uma introdução, instruções para inicio de jogo e lista dos heróis com os atributos
