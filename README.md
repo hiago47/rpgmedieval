@@ -135,7 +135,7 @@ Em todos os casos é retornado o status atual dos personagens. Exemplo:
 ```
 GET /api/batalha/{ID da batalha}
 ```
-Em qualquer momento é possível consultar o status de qualquer batalha com esta rota. Incluindo os turnos em ordem cronológica
+Em qualquer momento é possível consultar o status de qualquer batalha com esta rota. Incluindo os turnos em ordem cronológica. 
 Retorno:
 ```
 {
