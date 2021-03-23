@@ -187,4 +187,4 @@ Retorna os nicknames com as devidas pontuações por ordem de colocação:
 
 ### Mais detalhes
 - Criei a Trait **ApiResponseTrait** com um método padrão de resposta JSON usado em todos os Controllers 
-- Fiz alterações no **Handler.php** para padronizar o retorno por JSON 
+- Fiz alterações no **Handler.php** para padronizar o retorno das exceções em JSON 
