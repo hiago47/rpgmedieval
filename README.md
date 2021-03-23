@@ -42,10 +42,14 @@ Jogo de RPG que roda por API. Recebe comandos via GET e retorna um JSON com o re
     ```
 
 # Passo a passo do desenvolvimento e as Rotas
-    - JogoController
-        Eu agrupei a introdução ao jogo e registro de jogador neste controller
-        
-        ```
-        GET /api
-        ```
-        Retorna em JSON uma introdução, instruções para inicio de jogo e lista dos heróis com os atributos
+- JogoController
+    Eu agrupei o registro de jogador e batalha neste controller, isso facilitou pois é uma requisição a menos antes de iniciar o jogo: 
+    Ao escolher o nickname e classe de herói, um registro da batalha é gerado com um oponente defino. Dispensando ter que cadastrar um jogador para depois escolher a classe. 
+
+    ```
+    GET /api
+    ```
+    Retorna em JSON uma introdução, instruções para inicio de jogo e lista dos heróis com os atributos
+
+
+    
