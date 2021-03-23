@@ -87,7 +87,7 @@ class BatalhaController extends Controller
 
 
     /**
-     * Retorna informações atuais da batalha
+     * Retorna informações atuais da batalha, incluindo os turnos em ordem cronológica
      * 
      * @param Batalha $batalha;
      * @return 
@@ -99,20 +99,19 @@ class BatalhaController extends Controller
             'status' => $this->status($batalha)
         ];
 
-        $arrUltimoAtaque = [];
+        $res['status']['turnos'] = "Batalha não iniciada";
         if(count($batalha->turnos) > 0) {
-            $arrUltimoAtaque = $batalha->turnos->last()->only(
-                [
-                    'atacante',
-                    'ataque',
-                    'defensor',
-                    'defesa', 
-                    'dano'
-                ]
-            );
+            
+            $res['status']['turnos'] = $batalha->turnos->map(function ($item, $key) {
+                return [
+                    'atacante' => $item->atacante,
+                    'ataque' => $item->ataque,
+                    'defensor' => $item->defensor,
+                    'defesa' => $item->defesa, 
+                    'dano' => $item->dano
+                ];
+            });
         }
-
-        $res['ultimo_ataque'] = $arrUltimoAtaque;
 
         return $this->jsonResponse($res);
     }

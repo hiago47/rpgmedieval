@@ -98,7 +98,7 @@ O retorno: JSON com o ID da batalha(nova ou em andamento) e com o status dos per
 - Rotas:
 
 ```
-GET /api/{ID da batalha}/jogar
+GET /api/batalha/{ID da batalha}/jogar
 ```
 Inicia ou continua uma batalha: Calcula a iniciativa, realiza o ataque e retorna o resultado do turno. 
 Caso zere os pontos de vida de um dos personagens a batalha é encerrada, o retorno vem com o nome do vitorioso e pontuação feita no caso do herói(o mesmo para as batalhas já terminadas antes). 
@@ -133,32 +133,41 @@ Em todos os casos é retornado o status atual dos personagens. Exemplo:
 <br/>
 
 ```
-GET /api/{ID da batalha}
+GET /api/batalha/{ID da batalha}
 ```
-Em qualquer momento é possível consultar o status de qualquer batalha com esta rota. 
+Em qualquer momento é possível consultar o status de qualquer batalha com esta rota. Incluindo os turnos em ordem cronológica
 Retorno:
 ```
 {
-    "id": 33,
+    "id": 37,
     "status": {
         "personagens": {
             "heroi": {
                 "nome": "hiago47",
-                "classe": "Bárbaro",
-                "pdv": 5
+                "classe": "Paladino",
+                "pdv": 15
             },
             "monstro": {
-                "nome": "Kobold",
-                "pdv": 5
+                "nome": "Morto-Vivo",
+                "pdv": 12
             }
-        }
-    },
-    "ultimo_ataque": {
-        "atacante": "heroi",
-        "ataque": 17,
-        "defensor": "monstro",
-        "defesa": 13,
-        "dano": 15
+        },
+        "turnos": [
+            {
+                "atacante": "heroi",
+                "ataque": 11,
+                "defensor": "monstro",
+                "defesa": 4,
+                "dano": 9
+            },
+            {
+                "atacante": "heroi",
+                "ataque": 11,
+                "defensor": "monstro",
+                "defesa": 7,
+                "dano": 4
+            }
+        ]
     }
 }
 ```
