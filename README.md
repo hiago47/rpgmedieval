@@ -1,4 +1,5 @@
 # RPG Medieval
+## Projeto feito para um processo seletivo de dev PHP
 
 Jogo de RPG que roda por API Rest recebendo os comandos via GET e retornando em JSON o resultado de cada jogada. 
 
@@ -6,7 +7,7 @@ Jogo de RPG que roda por API Rest recebendo os comandos via GET e retornando em 
 - Laravel 8.33.1
 - PHP 7.4
 - MySQL
-- Para execução: Postman
+- Para execução: Postman Desktop
 
 ## Instalação
 - Após clonar esse repositório acesse a pasta onde baixou via terminal e execute:
