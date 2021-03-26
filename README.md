@@ -1,7 +1,6 @@
 # RPG Medieval
-## Projeto feito para um processo seletivo de dev PHP
-
 Jogo de RPG que roda por API Rest recebendo os comandos via GET e retornando em JSON o resultado de cada jogada. 
+**Este projeto foi um desafio para um processo seletivo de dev PHP.**
 
 ## Tecnologias
 - Laravel 8.33.1
