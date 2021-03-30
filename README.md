@@ -9,7 +9,8 @@ Jogo de RPG que roda por API Rest recebendo os comandos via GET e retornando em 
 - Para execução: Postman Desktop
 
 ## Instalação
-- Após clonar esse repositório acesse a pasta onde baixou via terminal e execute: (https://getcomposer.org/)
+- Certifique-se de ter o Composer instalado: https://getcomposer.org/
+- Após clonar esse repositório acesse a pasta onde baixou via terminal e execute: 
     ```
     composer install
     ```
